@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+
 
 namespace LINQQueries
 {
@@ -8,12 +10,7 @@ namespace LINQQueries
     {
         static void Main(string[] args)
         {
-            var movies = new List<Movie> {
-            new Movie { Title = "Dark Knight", Raiting = 8.9f, Year = 2008 },
-            new Movie { Title = "The King's Speach", Raiting = 8.0f, Year = 2010 },
-            new Movie { Title = "Casablanca", Raiting = 8.5f, Year = 1942 },
-            new Movie { Title = "Star Wars V", Raiting = 8.7f, Year = 1980 }
-            };
+            var movies = ProcessMovies("data/movies.csv");
 
             var filter = new Filter();
             filter.MoviesWhere(movies);
@@ -23,6 +20,18 @@ namespace LINQQueries
             filter.MoviesMyLinqOrder(movies);
             filter.MoviesMyLinqOrderQuerySyntax(movies);
 
+        }
+
+        private static List<Movie> ProcessMovies(string path)
+        {
+            var query =
+
+                File.ReadAllLines(path)
+                    .Skip(1)
+                    .Where(l => l.Length > 1)
+                    .ToMovie();
+
+            return query.ToList();
         }
     }
 }
