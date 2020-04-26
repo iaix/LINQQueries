@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LINQQueries
 {
-    public static class ParseData
+    public static class ParseMovieData
     {
         public static IEnumerable<Movie> ToMovie(this IEnumerable<string> source)
         {
